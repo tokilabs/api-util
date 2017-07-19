@@ -1,0 +1,12 @@
+src/
+tests/
+tools/
+typings/
+config/
+.editorconfig
+.gitattributes
+.settings/
+.travis.yml
+.vscode/
+tslint.json
+tsconfig.json
