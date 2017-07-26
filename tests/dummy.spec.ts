@@ -1,9 +1,8 @@
-/// <reference path="./typings.d.ts" />
-
+import { test } from 'ava';
 import { expect } from 'chai';
 
-describe('Dummy developer', () => {
-  it("doesn't write tests", () => {
-    expect(true).to.be.true;
-  });
+import { ApiError } from '@cashfarm/api-util';
+
+test('A dummy developer does not write tests.', t => {
+  t.is(true, true);
 });

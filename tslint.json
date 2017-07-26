@@ -1,5 +1,41 @@
 {
+    "extends": "tslint-microsoft-contrib",
+    "rulesDirectory": [
+        "node_modules/tslint-microsoft-contrib"
+    ],
     "rules": {
+        "no-any": false,
+        "import-name": false,
+        "no-var-requires": false,
+        "variable-name": [
+          true, "allow-leading-underscore", "allow-pascal-case"
+        ],
+        "no-backbone-get-set-outside-model": false,
+        "no-default-export": false,
+        "radix": false,
+        "align": [true, "parameters", "arguments"],
+
+        "export-name": false,
+        "typedef": [false],
+        "no-inferrable-types": [true, "ignore-params"],
+        "curly": false,
+        "function-name": false,
+        "missing-jsdoc": false,
+        "no-relative-imports": false,
+        "no-console": [
+            false
+        ],
+        "non-literal-require": false,
+        "no-require-imports": false,
+        "strict-boolean-expressions": false,
+        "no-unsafe-any": false,
+        "no-parameter-properties": false,
+        "ordered-imports": [
+          false
+        ],
+        "no-multiline-string": false,
+        "no-reserved-keywords": false,
+
         "class-name": true,
         "comment-format": [true,
             "check-space"
@@ -34,8 +70,9 @@
         }],
         "no-internal-module": true,
         "no-trailing-whitespace": true,
-        "no-inferrable-types": true,
         "no-null-keyword": false,
-        "no-unused-variable": true
-  }
+        "no-unused-variable": true,
+        "prefer-const": true,
+        "no-increment-decrement": false
+    }
 }

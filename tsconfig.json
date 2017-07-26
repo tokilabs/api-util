@@ -24,10 +24,7 @@
       "dom"
     ]
   },
-  "exclude": [
-    "node_modules",
-    "lib",
-    "tests",
-    "gulpfile.ts"
+  "include": [
+    "src/**/*.ts"
   ]
 }

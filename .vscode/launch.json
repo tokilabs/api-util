@@ -21,9 +21,32 @@
       "env": {
         "NODE_ENV": "development"
       },
-      "externalConsole": false,
+      "console": "integratedTerminal",
       "sourceMaps": true,
-      "outDir": "${workspaceRoot}/tests/compiled"
+      "outFiles": ["${workspaceRoot}/tests/compiled"]
+    },
+    {
+      "name": "Gen Docs",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/node_modules/.bin/jsdoc",
+      "stopOnEntry": false,
+      "args": [
+        "src/",
+        "-c", "${workspaceRoot}/tsdoc.json",
+        "-d", "docs/"
+      ],
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceRoot}/docs"]
     },
     {
       "name": "Attach",
@@ -32,8 +55,8 @@
       "port": 5858,
       "address": "localhost",
       "restart": false,
-      "sourceMaps": true,
-      "outDir": "${workspaceRoot}/lib",
+      "sourceMaps": false,
+      "outFiles": [],
       "localRoot": "${workspaceRoot}",
       "remoteRoot": null
     },
@@ -41,10 +64,10 @@
       "name": "Attach to Process",
       "type": "node",
       "request": "attach",
-      "processId": "${command.PickProcess}",
+      "processId": "${command:PickProcess}",
       "port": 5858,
-      "sourceMaps": true,
-      "outDir": "${workspaceRoot}/lib"
+      "sourceMaps": false,
+      "outFiles": []
     }
   ]
 }
