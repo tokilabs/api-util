@@ -5,38 +5,47 @@ import { IController } from '../interfaces';
 import { EndpointMetadata } from '../metadata/endpoint';
 import { injectable } from 'inversify';
 
-export interface IRoutesConfig {}
-
-export interface IRouter {}
-
 @injectable()
 export class Router {
-
-  // @todo: implement loading routes from routes config object
   @inject('ApiPrefix')
-  public prefix: string = '';
+  public prefix = '';
+
+  private controllers: IController[];
 
   constructor(
     @inject('Server') private server: Server,
-    @multiInject('IController') private controllers: IController[]) {
+    @multiInject('IController') controllers: IController[]) {
+      this.addControllers(controllers);
   }
 
-  public registerEndpoints(): void {
-    this.controllers.forEach(c => {
-      let edpts: { [func: string]: any[] } = Reflect.getMetadata('methodMetadata', Object.getPrototypeOf(c).constructor);
-      Object.keys(edpts).forEach(func => {
-        for (let meta of edpts[func]) {
-          if (meta instanceof EndpointMetadata) {
-            this.registerEndpoint(c, func, meta);
-            return;
-          }
+  /**
+   * Registers endpoints for the current controllers
+   *
+   * @memberof Router
+   */
+  public addControllers(ctrls: IController[]): void {
+    this.controllers = this.controllers.concat(this.controllers, ctrls);
+
+    ctrls.forEach(c => this.addController(c));
+  }
+
+  public addController(ctrl: IController) {
+    const edpts: { [func: string]: any[] } = Reflect.getMetadata('methodMetadata', Object.getPrototypeOf(ctrl).constructor);
+
+    Object.keys(edpts).forEach(func => {
+      for (const meta of edpts[func]) {
+        if (meta instanceof EndpointMetadata) {
+          this.registerEndpoint(ctrl, func, meta);
+
+          return;
         }
-      });
+      }
     });
   }
 
   private registerEndpoint(ctrl: IController, func: string, meta: EndpointMetadata) {
-    let path = (this.prefix + meta.path).trim().length == 0 ? '/' : (this.prefix + meta.path);
+    const path = (this.prefix + meta.path).trim().length === 0 ? '/' : (this.prefix + meta.path);
+
     this.server.log('debug', `Mapping route ${path} to ${Object.getPrototypeOf(ctrl).constructor.name}.${func}`);
 
     this.server.route(
@@ -48,14 +57,10 @@ export class Router {
           notes: meta.notes,
           tags: meta.tags,
           handler: ctrl[func].bind(ctrl),
-          validate: meta.validate,
+          validate: meta.validate
         }
       }
     );
-  }
-
-  public register(server: Server, options: any, next: () => any): void {
-    next();
   }
 }
 

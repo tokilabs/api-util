@@ -1,6 +1,6 @@
 {
   "name": "@cashfarm/api-util",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Utilities for building APIs with Hapi and Inversify",
   "author": "Saulo Vallory <saulo@cashfarm.tech>",
   "license": "MIT",
